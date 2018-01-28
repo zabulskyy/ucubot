@@ -26,6 +26,7 @@ namespace ucubot.Controllers
             var connectionString = _configuration.GetConnectionString("BotDatabase");
             using (var conn = new MySqlConnection(connectionString))
             {
+                conn.Open();
                 var adapter = new MySqlDataAdapter("SELECT * FROM lesson_signal", conn);
                 
                 var dataset = new DataSet();
@@ -50,6 +51,7 @@ namespace ucubot.Controllers
         {
             using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
             {
+                conn.Open();
                 var command = new MySqlCommand("SELECT * FROM lesson_signal WHERE id = @id", conn);
                 command.Parameters.Add("id", id);
                 var adapter = new MySqlDataAdapter(command);
@@ -79,6 +81,7 @@ namespace ucubot.Controllers
 
             using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
             {
+                conn.Open();
                 var command = conn.CreateCommand();
                 command.CommandText =
                     "INSERT INTO lesson_signal (user_id, signal_type) VALUES (@userId, @signalType);";
@@ -98,6 +101,7 @@ namespace ucubot.Controllers
         {
             using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
             {
+                conn.Open();
                 var command = conn.CreateCommand();
                 command.CommandText =
                     "DELETE FROM lesson_signal WHERE ID = @id;";
