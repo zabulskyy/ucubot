@@ -38,8 +38,8 @@ namespace ucubot.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSignal(SlackMessage message)
         {
-            var userId = message.UserId;
-            var signalType = message.Text.ConvertSlackMessageToSignalType();
+            var userId = message.user_id;
+            var signalType = message.text.ConvertSlackMessageToSignalType();
 
             // TODO: add insert command to store signal
             
