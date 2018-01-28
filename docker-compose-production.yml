@@ -1,19 +1,21 @@
 version: "3"
 services:
     nginx:
-      restart: always
-      build: ./nginx
-      ports:
-        - "0.0.0.0:8081:80"
-      links:
-        - app:app
+        restart: always
+        build: ./nginx
+        ports:
+          - "0.0.0.0:8081:8081"
+        links:
+          - app:app
     app:
+        restart: always
         build: ./ucubot
         ports:
-            - "80:8080"
+            - "80"
         depends_on:
             - db
     db:
+        restart: always
         image: "mysql:5.7"
         environment:
             MYSQL_ROOT_PASSWORD: "1qaz2wsx"
