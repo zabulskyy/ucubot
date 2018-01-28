@@ -10,7 +10,7 @@ using ucubot.Model;
 
 namespace ucubot.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/:[id]")]
     public class LessonSignalEndpointController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -23,46 +23,34 @@ namespace ucubot.Controllers
         [HttpGet]
         public IEnumerable<LessonSignalDto> ShowSignals()
         {
-            using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
-            {
-                var adapter = new MySqlDataAdapter("SELECT * FROM lesson_signal", conn);
-                
-                var dataset = new DataSet();
-                
-                adapter.Fill(dataset, "lesson_signal");
-
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
-                    var signalDto = new LessonSignalDto
-                    {
-                        Timestamp = (DateTime) row["timestamp_"],
-                        Type = (LessonSignalType) row["signal_type"],
-                        UserId = (string) row["user_id"]
-                    };
-                    yield return signalDto;
-                }
-            }
+            var connectionString = _configuration.GetConnectionString("BotDatabase");
+            
+            //TODO: replace with database query
+            return new LessonSignalDto[0];
+        }
+        
+        [HttpGet]
+        public LessonSignalDto ShowSignal(long id)
+        {   
+            //TODO: replace with database query
+            return null;
         }
         
         [HttpPost]
-        public async Task<IActionResult> PostSignal(SlackMessage message)
+        public async Task<IActionResult> CreateSignal(SlackMessage message)
         {
             var userId = message.UserId;
             var signalType = message.Text.ConvertSlackMessageToSignalType();
 
-            using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
-            {
-                var command = conn.CreateCommand();
-                command.CommandText =
-                    "INSERT INTO lesson_signal (user_id, signal_type) VALUES (@userId, @signalType);";
-                command.Parameters.AddRange(new[]
-                {
-                    new MySqlParameter("userId", userId),
-                    new MySqlParameter("signalType", signalType)
-                });
-                await command.ExecuteNonQueryAsync();
-            }
+            //TODO: add code to store above values
             
+            return Accepted();
+        }
+        
+        [HttpDelete]
+        public async Task<IActionResult> RemoveSignal(long id)
+        {
+            //TODO: add code to delete a record with the given id
             return Accepted();
         }
     }
