@@ -119,8 +119,8 @@ namespace usubot.End2EndTests
             // create
             var content = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("UserId", "@Anatolii"),
-                new KeyValuePair<string, string>("Text", "simple")
+                new KeyValuePair<string, string>("user_id", "U111"),
+                new KeyValuePair<string, string>("text", "simple")
             });
             var createResponse = await _client.PostAsync("/api/LessonSignalEndpoint", content);
             createResponse.StatusCode.Should().Be(HttpStatusCode.Accepted);
@@ -129,7 +129,7 @@ namespace usubot.End2EndTests
             getResponse = await _client.GetStringAsync("/api/LessonSignalEndpoint");
             values = ParseJson<LessonSignalDto[]>(getResponse);
             values.Length.Should().Be(1);
-            values[0].UserId.Should().Be("@Anatolii");
+            values[0].UserId.Should().Be("U111");
             values[0].Type.Should().Be(LessonSignalType.BoringSimple);
             
             // delete
