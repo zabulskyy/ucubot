@@ -4,14 +4,12 @@ services:
         restart: always
         build: ./nginx
         ports:
-          - "0.0.0.0:8081:8081"
+          - "0.0.0.0:80:80"
         links:
           - app:app
     app:
         restart: always
         build: ./ucubot
-        ports:
-            - "80"
         depends_on:
             - db
     db:

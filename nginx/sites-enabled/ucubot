@@ -1,6 +1,6 @@
 server {
 
-    listen 8081;
+    listen 80;
     server_name ucubot.daemon-engineer.com;
     charset utf-8;
 
