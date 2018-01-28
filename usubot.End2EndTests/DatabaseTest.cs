@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
-using Xunit;
 
 namespace usubot.End2EndTests
 {
