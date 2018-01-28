@@ -8,6 +8,8 @@ services:
             - app
     app:
         build: ./ucubot
+        ports:
+            - "80"
         depends_on:
             - db
     db:

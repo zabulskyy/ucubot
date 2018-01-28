@@ -27,7 +27,7 @@ namespace usubot.End2EndTests
         [SetUp]
         public void Init()
         {
-            _client = new HttpClient {BaseAddress = new Uri("http://127.0.0.1:8081")};
+            _client = new HttpClient {BaseAddress = new Uri("http://app:80")};
         }
         
         [Test, Order(-10)]

@@ -10,7 +10,7 @@ using ucubot.Model;
 
 namespace ucubot.Controllers
 {
-    [Route("api/[controller]/:[id]")]
+    [Route("api/[controller]")]
     public class LessonSignalEndpointController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -47,7 +47,7 @@ namespace ucubot.Controllers
             }
         }
         
-        [HttpGet]
+        [HttpGet("{id}")]
         public LessonSignalDto ShowSignal(long id)
         {
             using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
@@ -97,7 +97,7 @@ namespace ucubot.Controllers
             return Accepted();
         }
         
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSignal(long id)
         {
             using (var conn = new MySqlConnection(_configuration.GetConnectionString("BotDatabase")))
