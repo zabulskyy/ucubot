@@ -37,6 +37,7 @@ namespace ucubot.Controllers
                 {
                     var signalDto = new LessonSignalDto
                     {
+                        Id = (long) row["id"],
                         Timestamp = (DateTime) row["timestamp_"],
                         Type = (LessonSignalType) row["signal_type"],
                         UserId = (string) row["user_id"]
