@@ -37,9 +37,9 @@ namespace ucubot.Controllers
                 {
                     var signalDto = new LessonSignalDto
                     {
-                        Id = (long) row["id"],
+                        Id = (int) row["id"],
                         Timestamp = (DateTime) row["timestamp_"],
-                        Type = (LessonSignalType) row["signal_type"],
+                        Type = (LessonSignalType)Convert.ToInt32(row["signal_type"]),
                         UserId = (string) row["user_id"]
                     };
                     yield return signalDto;
@@ -54,7 +54,7 @@ namespace ucubot.Controllers
             {
                 conn.Open();
                 var command = new MySqlCommand("SELECT * FROM lesson_signal WHERE id = @id", conn);
-                command.Parameters.Add("id", id);
+                command.Parameters.AddWithValue("id", id);
                 var adapter = new MySqlDataAdapter(command);
                 
                 var dataset = new DataSet();
