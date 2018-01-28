@@ -10,7 +10,7 @@ using ucubot.Model;
 
 namespace ucubot.Controllers
 {
-    [Route("api/[controller]/:[id]")]
+    [Route("api/[controller]")]
     public class LessonSignalEndpointController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -28,7 +28,7 @@ namespace ucubot.Controllers
             return new LessonSignalDto[0];
         }
         
-        [HttpGet]
+        [HttpGet("{id}")]
         public LessonSignalDto ShowSignal(long id)
         {
             // TODO: add query to get a signal by the given id
@@ -46,7 +46,7 @@ namespace ucubot.Controllers
             return Accepted();
         }
         
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSignal(long id)
         {
             //TODO: add delete command to remove signal
