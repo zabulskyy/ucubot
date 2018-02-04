@@ -50,7 +50,6 @@ namespace ucubot.Controllers
         public async Task<IActionResult> RemoveSignal(long id)
         {
             //TODO: add delete command to remove signal
-            
             return Accepted();
         }
     }
