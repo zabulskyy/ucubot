@@ -2,12 +2,14 @@ version: "3"
 services:
     test:
         build:
-            context: .
+            context: ./usubot.End2EndTests
             dockerfile: Dockerfile-test
         depends_on:
             - app
     app:
-        build: ./ucubot
+        build:
+            context: ./ucubot
+            dockerfile: Dockerfile-test
         ports:
             - "80"
         depends_on:

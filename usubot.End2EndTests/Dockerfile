@@ -1,7 +1,7 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
 
 ADD . /app
-WORKDIR /app/usubot.End2EndTests
+WORKDIR /app
 
 RUN dotnet restore
 
