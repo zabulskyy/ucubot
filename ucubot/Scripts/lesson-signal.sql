@@ -3,4 +3,4 @@ create table LessonSignal (
   Timestamp DateTime, 
   SignalType INT, 
   Userid VARCHAR (10),
-  KEY (id));
+  PRIMARY KEY (id));
