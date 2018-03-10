@@ -42,7 +42,7 @@ namespace ucubot.Controllers
                 {
                     Id = id,
                     Timestamp = timestamp,
-                    SignalType = signalType,
+                    Type = signalType,
                     UserId = userId
                 };
                 yield return lessonSignalDto;
@@ -56,7 +56,7 @@ namespace ucubot.Controllers
         {
             var connectionString = _configuration.GetConnectionString("BotDatabase");
             var connection = new MySqlConnection(connectionString);   
-            var command = new MySqlCommand(string.Format("SELECT * FROM lessonsignal WHERE id = {0};", id), connection);
+            var command = new MySqlCommand("SELECT * FROM lessonsignal WHERE id = @id;", connection);
             connection.Open();
             var dataTable = new DataTable();
             var da = new MySqlDataAdapter(command);
@@ -76,7 +76,7 @@ namespace ucubot.Controllers
             {
                 Id = (int)id,
                 Timestamp = timestamp,
-                SignalType = signalType,
+                Type = signalType,
                 UserId = userId
             };
             connection.Close();
@@ -94,9 +94,9 @@ namespace ucubot.Controllers
             var connection = new MySqlConnection(connectionString);              
             connection.Open();
 
-            var command = new MySqlCommand(string.Format("INSERT lessonsignal " +
+            var command = new MySqlCommand("INSERT lessonsignal " +
                                            "(Timestamp, SignalType, Userid)" +
-                                           "VALUES (CURRENT_TIMESTAMP, {0}, {1});", signalType, userId), connection);
+                                           "VALUES (CURRENT_TIMESTAMP, @signalType @userId);", connection);
             await command.ExecuteNonQueryAsync();
             connection.Close();
             return Accepted();
@@ -109,7 +109,7 @@ namespace ucubot.Controllers
             var connection = new MySqlConnection(connectionString);              
             connection.Open();
 
-            var command = new MySqlCommand(string.Format("DELETE FROM lessonsignal WHERE id = {0};", id), connection);
+            var command = new MySqlCommand("DELETE FROM lessonsignal WHERE id = @id;", connection);
             await command.ExecuteNonQueryAsync();
             connection.Close();
             return Accepted();
