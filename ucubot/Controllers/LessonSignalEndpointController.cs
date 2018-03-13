@@ -27,7 +27,7 @@ namespace ucubot.Controllers
         {
             var connectionString = _configuration.GetConnectionString("BotDatabase");
             var connection = new MySqlConnection(connectionString);   
-            var command = new MySqlCommand("SELECT * FROM lessonsignal;", connection);
+            var command = new MySqlCommand("SELECT * FROM lesson_signal;", connection);
             connection.Open();
             var dataTable = new DataTable();
             var da = new MySqlDataAdapter(command);
@@ -57,6 +57,7 @@ namespace ucubot.Controllers
             var connectionString = _configuration.GetConnectionString("BotDatabase");
             var connection = new MySqlConnection(connectionString);   
             var command = new MySqlCommand("SELECT * FROM lesson_signal WHERE id = @id;", connection);
+            command.Parameters.AddWithValue("@id", id);
             connection.Open();
             var dataTable = new DataTable();
             var da = new MySqlDataAdapter(command);
@@ -96,9 +97,9 @@ namespace ucubot.Controllers
 
             var command = new MySqlCommand("INSERT lesson_signal " +
                                            "(Timestamp, SignalType, Userid)" +
-                                           "VALUES (CURRENT_TIMESTAMP, @signalType @userId);", connection);
-            command.Parameters["@userId"].Value = userId;
-            command.Parameters["@signalType"].Value = signalType;
+                                           "VALUES (CURRENT_TIMESTAMP, @signalType, @userId);", connection);
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@signalType", signalType);
             await command.ExecuteNonQueryAsync();
             connection.Close();
             return Accepted();
@@ -112,6 +113,7 @@ namespace ucubot.Controllers
             connection.Open();
 
             var command = new MySqlCommand("DELETE FROM lesson_signal WHERE id = @id;", connection);
+            command.Parameters.AddWithValue("@id", id);
             await command.ExecuteNonQueryAsync();
             connection.Close();
             return Accepted();
