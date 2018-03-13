@@ -97,6 +97,8 @@ namespace ucubot.Controllers
             var command = new MySqlCommand("INSERT lessonsignal " +
                                            "(Timestamp, SignalType, Userid)" +
                                            "VALUES (CURRENT_TIMESTAMP, @signalType @userId);", connection);
+            command.Parameters["@userId"].Value = userId;
+            command.Parameters["@signalType"].Value = signalType;
             await command.ExecuteNonQueryAsync();
             connection.Close();
             return Accepted();
